@@ -1,7 +1,21 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
+from chat.models import Message
 import json
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
+
+    def fetch_messages(self, data):
+        print('fetching...')
+
+
+    def new_message(self, data):
+        print('get new messages...')
+
+    commands = {
+        'fetch_messages': fetch_messages,
+        'new_message': new_message
+    }
+
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = f'chat_{self.room_name}'
@@ -23,6 +37,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         username = text_data_json['username']
+        self.commands[text_data_json['command']](self, text_data)
 
         await self.channel_layer.group_send(
             self.room_group_name,

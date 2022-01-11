@@ -50,6 +50,7 @@
             chatSocket.send(JSON.stringify({
                 'message': message,
                 'username': username,
+                'command': 'new_message'
             }));
             messageinput.value = "";
         });
