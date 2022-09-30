@@ -6,3 +6,5 @@ A Basic Chat App created using Django & channels.
 - Real time chat
 - Saving of chat messages to database
 - displaying saved chat messages
+
+Testing Webhook integration
